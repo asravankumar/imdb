@@ -104,7 +104,7 @@ module Imdb
 
     def plot_keywords
       doc = Nokogiri::HTML(Imdb::Movie.find_by_id(@id, :keywords))
-      text = doc.xpath("//div[@id='keywords_content']/table/tbody/tr/td/div[@class='sodatext']/a").collect{|x| x.attributes["href"].to_s.match('/keyword/([^/?]+)/?.*')[1]}
+      text = doc.xpath("//div[@id='keywords_content']/table/tbody/tr/td/div[@class='sodatext']/a").collect{|x| x.text}
       keywords = doc.xpath("//div[@id='keywords_content']/table/tbody/tr/td/div[@class='sodatext']/a").collect{|x| x.attributes["href"].to_s.match('/keyword/([^/?]+)/?.*')[1]}
       keywords.zip(text).to_h
     end
