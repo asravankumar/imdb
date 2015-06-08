@@ -102,6 +102,13 @@ module Imdb
       doc.at('p.plotSummary').inner_html.gsub(/<i.*/im, '').strip.imdb_unescape_html rescue nil
     end
 
+    def plot_keywords
+      doc = Nokogiri::HTML(Imdb::Movie.find_by_id(@id, :keywords))
+      text = data.xpath("//div[@id='keywords_content']/table/tbody/tr/td/div[@class='sodatext']/a").collect{|x| x.attributes["href"].to_s.match('/keyword/([^/?]+)/?.*')[1]}
+      keywords = data.xpath("//div[@id='keywords_content']/table/tbody/tr/td/div[@class='sodatext']/a").collect{|x| x.attributes["href"].to_s.match('/keyword/([^/?]+)/?.*')[1]}
+      keywords.zip(text).to_h
+    end
+
     # Returns a string containing the URL to the movie poster.
     def poster
       src = document.at("a[@name='poster'] img")['src'] rescue nil
