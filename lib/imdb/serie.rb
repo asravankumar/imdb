@@ -10,7 +10,7 @@ module Imdb
     end
 
     def creators
-      document.search("h5[text()^='Creator'] ~ div a").map { |link| link.content.strip } rescue []
+      document.search("h5[text()^='Writers'] ~ div a").map { |link| link.content.strip } rescue []
     end
 
     private
